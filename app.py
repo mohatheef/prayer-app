@@ -28,7 +28,7 @@ if "auto" not in st.session_state:
     st.session_state.city = None
 
 if "default_city" not in st.session_state:
-    st.session_state.default_city = "Kundapura"  # Default city
+    st.session_state.default_city = "Kundapura"
 
 # --------------------
 # MAIN PAGE – Quick City Switch (Mobile Friendly)
@@ -55,7 +55,6 @@ for i, city in enumerate(quick_cities):
 # --------------------
 st.sidebar.header("Settings")
 
-# Madhhab selector
 madhhab = st.sidebar.radio(
     "Asr Madhhab",
     ["Shafi", "Hanafi"],
@@ -76,7 +75,7 @@ if st.sidebar.button("📍 Auto-detect Location"):
         st.sidebar.error("Auto-detect failed. Please select city manually.")
 
 # --------------------
-# Location selection logic
+# Location logic
 # --------------------
 if st.session_state.auto:
     city_name = st.session_state.city
@@ -100,10 +99,7 @@ else:
 # --------------------
 # Date & year
 # --------------------
-selected_date = st.sidebar.date_input(
-    "Select Date",
-    date.today()
-)
+selected_date = st.sidebar.date_input("Select Date", date.today())
 
 year = st.sidebar.number_input(
     "CSV Year",
@@ -117,20 +113,13 @@ year = st.sidebar.number_input(
 # --------------------
 st.subheader(f"📅 Prayer Times for {city_name}")
 
-times = get_prayer_times(
-    lat,
-    lng,
-    selected_date,
-    madhhab=madhhab
-)
+times = get_prayer_times(lat, lng, selected_date, madhhab=madhhab)
 
 col1, col2 = st.columns(2)
-
 with col1:
     st.metric("Fajr", times["fajr"])
     st.metric("Sunrise", times["sunrise"])
     st.metric("Dhuhr", times["dhuhr"])
-
 with col2:
     st.metric("Asr", times["asr"])
     st.metric("Maghrib", times["maghrib"])
@@ -151,39 +140,38 @@ st.subheader("📥 Export Full-Year Prayer Calendar")
 if st.button("Generate Yearly CSV"):
     filename = generate_year_csv(city_name, year, madhhab=madhhab)
     st.success("CSV generated successfully!")
-
     with open(filename, "rb") as f:
-        st.download_button(
-            "⬇️ Download CSV",
-            f,
-            file_name=filename,
-            mime="text/csv"
-        )
+        st.download_button("⬇️ Download CSV", f, file_name=filename)
 
 # --------------------
-# Footer
+# Community & Footer
 # --------------------
 st.divider()
+
+st.markdown(
+    """
+    <center>
+    🐞 <a href="https://github.com/mohatheef/prayer-app/issues" target="_blank">Report an Issue</a>
+    &nbsp; | &nbsp;
+    📝 <a href="https://forms.gle/nhoVNjB5SN2a32Lq8" target="_blank">Send Feedback</a>
+    &nbsp; | &nbsp;
+    👥 <a href="https://github.com/mohatheef/prayer-app/graphs/contributors" target="_blank">Contributors</a>
+    </center>
+    """,
+    unsafe_allow_html=True
+)
+
 st.markdown(
     """
     <center>
     <small>
     Built by <b>Mohammed Atheef G A</b><br>
     <em>“Whoever guides someone to good will have a reward like one who did it.”</em><br>
-    (Sahih Muslim)
-    <br><br>
-    💻 <b>Open Source:</b> 
-    <a href="https://github.com/mohatheef/prayer-app" target="_blank">
-    github.com/mohatheef/prayer-app
-    </a>
-    <br>
-    📩 <b>Contact:</b> 
-    <a href="mailto:atheefga18@gmail.com">
-    atheefga18@gmail.com
-    </a>
+    (Sahih Muslim)<br><br>
+    💻 <a href="https://github.com/mohatheef/prayer-app" target="_blank">Open Source (MIT License)</a><br>
+    📩 <a href="mailto:atheefga18@gmail.com">atheefga18@gmail.com</a>
     </small>
     </center>
     """,
     unsafe_allow_html=True
 )
-
