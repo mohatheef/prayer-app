@@ -1,5 +1,5 @@
 import math
-from .astro_utils import DEG2RAD, RAD2DEG
+from .astro_utils import DEG2RAD
 
 def hour_angle(lat, decl, altitude):
     lat_rad = lat * DEG2RAD
@@ -20,12 +20,15 @@ def hour_angle(lat, decl, altitude):
 
 def asr_altitude(lat, decl):
     """
-    Shafi Asr: shadow length = 1 × object height
+    Shafi madhhab Asr:
+    shadow length = 1 × object height
     """
+
     lat_rad = lat * DEG2RAD
 
-    angle = math.atan(
-        1 / (1 + abs(math.tan(lat_rad - decl)))
+    Z = math.atan(
+        1 + abs(math.tan(lat_rad - decl))
     )
 
-    return -math.degrees(angle)
+    altitude = math.pi / 2 - Z  # 90° - Z
+    return math.degrees(altitude)
