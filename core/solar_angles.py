@@ -18,17 +18,18 @@ def hour_angle(lat, decl, altitude):
     return math.degrees(math.acos(cos_h)) / 15  # hours
 
 
-def asr_altitude(lat, decl):
+def asr_altitude(lat, decl, shadow_ratio=1):
     """
-    Shafi madhhab Asr:
-    shadow length = 1 × object height
+    Asr altitude for given shadow ratio
+    shadow_ratio = 1 → Shafi
+    shadow_ratio = 2 → Hanafi
     """
 
     lat_rad = lat * DEG2RAD
 
     Z = math.atan(
-        1 + abs(math.tan(lat_rad - decl))
+        shadow_ratio + abs(math.tan(lat_rad - decl))
     )
 
-    altitude = math.pi / 2 - Z  # 90° - Z
+    altitude = math.pi / 2 - Z  # 90° - zenith angle
     return math.degrees(altitude)
