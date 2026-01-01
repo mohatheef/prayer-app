@@ -27,19 +27,48 @@ if "auto" not in st.session_state:
     st.session_state.lng = None
     st.session_state.city = None
 
+if "default_city" not in st.session_state:
+    st.session_state.default_city = "Kundapura"  # ✅ Default city
+
 # --------------------
 # Sidebar
 # --------------------
 st.sidebar.header("Settings")
 
-# Madhhab selector (NEW)
+# Madhhab selector
 madhhab = st.sidebar.radio(
     "Asr Madhhab",
     ["Shafi", "Hanafi"],
     index=0
 )
 
-# Auto-detect button
+# --------------------
+# Quick City Switch
+# --------------------
+st.sidebar.subheader("Quick City Switch")
+
+quick_cities = [
+    "Kundapura",
+    "Udupi",
+    "Mangaluru",
+    "Bengaluru",
+    "Honnavar",
+    "Bhatkal",
+]
+
+quick_city = st.sidebar.radio(
+    "Popular locations",
+    quick_cities,
+    index=quick_cities.index(st.session_state.default_city)
+)
+
+if quick_city != st.session_state.default_city:
+    st.session_state.default_city = quick_city
+    st.session_state.auto = False  # disable auto if manually switched
+
+# --------------------
+# Auto-detect
+# --------------------
 if st.sidebar.button("📍 Auto-detect Location"):
     try:
         loc = get_location_from_ip()
@@ -50,7 +79,9 @@ if st.sidebar.button("📍 Auto-detect Location"):
     except Exception:
         st.sidebar.error("Auto-detect failed. Please select city manually.")
 
+# --------------------
 # Location selection logic
+# --------------------
 if st.session_state.auto:
     city_name = st.session_state.city
     lat = st.session_state.lat
@@ -63,13 +94,16 @@ if st.session_state.auto:
         st.session_state.auto = False
 else:
     city_name = st.sidebar.selectbox(
-        "Select City",
-        sorted(CITIES.keys())
+        "All Cities",
+        sorted(CITIES.keys()),
+        index=sorted(CITIES.keys()).index(st.session_state.default_city)
     )
     lat = CITIES[city_name]["lat"]
     lng = CITIES[city_name]["lng"]
 
+# --------------------
 # Date & year
+# --------------------
 selected_date = st.sidebar.date_input(
     "Select Date",
     date.today()
@@ -131,7 +165,7 @@ if st.button("Generate Yearly CSV"):
         )
 
 # --------------------
-# Footer (Islamic intention + credit)
+# Footer
 # --------------------
 st.divider()
 st.markdown(
