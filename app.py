@@ -18,6 +18,17 @@ st.set_page_config(
 st.title("🕌 Prayer Times Calculator")
 st.caption("Shafi & Hanafi Madhhab · Umm al-Qura · Asia/Kolkata")
 
+# ✅ Main-page helper text (NEW)
+st.markdown(
+    """
+    <div style="text-align:center; font-size:14px; color:#555; margin-bottom:10px;">
+    <b>Quick switch shows:</b>
+    Kundapura · Udupi · Mangaluru · Bengaluru · Honnavar · Bhatkal
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 # --------------------
 # Session State Init
 # --------------------
@@ -28,7 +39,7 @@ if "auto" not in st.session_state:
     st.session_state.city = None
 
 if "default_city" not in st.session_state:
-    st.session_state.default_city = "Kundapura"  # ✅ Default city
+    st.session_state.default_city = "Kundapura"  # Default city
 
 # --------------------
 # Sidebar
@@ -64,7 +75,7 @@ quick_city = st.sidebar.radio(
 
 if quick_city != st.session_state.default_city:
     st.session_state.default_city = quick_city
-    st.session_state.auto = False  # disable auto if manually switched
+    st.session_state.auto = False
 
 # --------------------
 # Auto-detect
