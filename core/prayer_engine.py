@@ -6,16 +6,24 @@ TZ_OFFSET = 5.5  # Asia/Kolkata
 FAJR_ANGLE = -18.5
 SUN_ALT = -0.833
 
+
 def to_hhmm(hours):
     h = int(hours)
     m = int((hours - h) * 60)
     return f"{h:02d}:{m:02d}"
 
 
-def get_prayer_times(lat: float, lng: float, d: date):
+def get_prayer_times(
+    lat: float,
+    lng: float,
+    d: date,
+    madhhab: str = "Shafi"
+):
     """
     Core prayer-time engine
-    Shafi madhhab | Umm al-Qura | Pure Python
+    - Calculation: Umm al-Qura
+    - Asr: Shafi or Hanafi (shadow-based)
+    - Timezone: Asia/Kolkata
     """
 
     jd = julian_day(d.year, d.month, d.day)
@@ -27,7 +35,15 @@ def get_prayer_times(lat: float, lng: float, d: date):
     fajr = solar_noon - hour_angle(lat, decl, FAJR_ANGLE)
     sunrise = solar_noon - hour_angle(lat, decl, SUN_ALT)
     dhuhr = solar_noon
-    asr = solar_noon + hour_angle(lat, decl, asr_altitude(lat, decl))
+
+    # ---- Asr (madhhab-based) ----
+    shadow_ratio = 2 if madhhab == "Hanafi" else 1
+    asr = solar_noon + hour_angle(
+        lat,
+        decl,
+        asr_altitude(lat, decl, shadow_ratio)
+    )
+
     maghrib = solar_noon + hour_angle(lat, decl, SUN_ALT)
     isha = maghrib + 1.5  # Umm al-Qura (90 min)
 

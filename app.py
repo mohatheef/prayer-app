@@ -10,13 +10,13 @@ from core.qibla import qibla_direction
 # Page config
 # --------------------
 st.set_page_config(
-    page_title="Prayer Times (Shafi · Umm al-Qura)",
+    page_title="Prayer Times (Shafi · Hanafi · Umm al-Qura)",
     page_icon="🕌",
     layout="centered"
 )
 
 st.title("🕌 Prayer Times Calculator")
-st.caption("Shafi Madhhab · Umm al-Qura · Asia/Kolkata")
+st.caption("Shafi & Hanafi Madhhab · Umm al-Qura · Asia/Kolkata")
 
 # --------------------
 # Session State Init
@@ -31,6 +31,13 @@ if "auto" not in st.session_state:
 # Sidebar
 # --------------------
 st.sidebar.header("Settings")
+
+# Madhhab selector (NEW)
+madhhab = st.sidebar.radio(
+    "Asr Madhhab",
+    ["Shafi", "Hanafi"],
+    index=0
+)
 
 # Auto-detect button
 if st.sidebar.button("📍 Auto-detect Location"):
@@ -54,7 +61,6 @@ if st.session_state.auto:
 
     if st.sidebar.button("↩️ Switch to Manual City"):
         st.session_state.auto = False
-
 else:
     city_name = st.sidebar.selectbox(
         "Select City",
@@ -81,7 +87,12 @@ year = st.sidebar.number_input(
 # --------------------
 st.subheader(f"📅 Prayer Times for {city_name}")
 
-times = get_prayer_times(lat, lng, selected_date)
+times = get_prayer_times(
+    lat,
+    lng,
+    selected_date,
+    madhhab=madhhab
+)
 
 col1, col2 = st.columns(2)
 
@@ -108,7 +119,7 @@ st.divider()
 st.subheader("📥 Export Full-Year Prayer Calendar")
 
 if st.button("Generate Yearly CSV"):
-    filename = generate_year_csv(city_name, year)
+    filename = generate_year_csv(city_name, year, madhhab=madhhab)
     st.success("CSV generated successfully!")
 
     with open(filename, "rb") as f:
@@ -120,10 +131,18 @@ if st.button("Generate Yearly CSV"):
         )
 
 # --------------------
-# Footer Credit
+# Footer (Islamic intention + credit)
 # --------------------
 st.divider()
 st.markdown(
-    "<center><small>Built by <b>Mohammed Atheef G A</b></small></center>",
+    """
+    <center>
+    <small>
+    Built by <b>Mohammed Atheef G A</b><br>
+    <em>“Whoever guides someone to good will have a reward like one who did it.”</em><br>
+    (Sahih Muslim)
+    </small>
+    </center>
+    """,
     unsafe_allow_html=True
 )
