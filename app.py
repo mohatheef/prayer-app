@@ -18,17 +18,6 @@ st.set_page_config(
 st.title("🕌 Prayer Times Calculator")
 st.caption("Shafi & Hanafi Madhhab · Umm al-Qura · Asia/Kolkata")
 
-# ✅ Main-page helper text (NEW)
-st.markdown(
-    """
-    <div style="text-align:center; font-size:14px; color:#555; margin-bottom:10px;">
-    <b>Quick switch shows:</b>
-    Kundapura · Udupi · Mangaluru · Bengaluru · Honnavar · Bhatkal
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-
 # --------------------
 # Session State Init
 # --------------------
@@ -42,21 +31,9 @@ if "default_city" not in st.session_state:
     st.session_state.default_city = "Kundapura"  # Default city
 
 # --------------------
-# Sidebar
+# MAIN PAGE – Quick City Switch (Mobile Friendly)
 # --------------------
-st.sidebar.header("Settings")
-
-# Madhhab selector
-madhhab = st.sidebar.radio(
-    "Asr Madhhab",
-    ["Shafi", "Hanafi"],
-    index=0
-)
-
-# --------------------
-# Quick City Switch
-# --------------------
-st.sidebar.subheader("Quick City Switch")
+st.markdown("### 📍 Quick City Switch")
 
 quick_cities = [
     "Kundapura",
@@ -67,15 +44,23 @@ quick_cities = [
     "Bhatkal",
 ]
 
-quick_city = st.sidebar.radio(
-    "Popular locations",
-    quick_cities,
-    index=quick_cities.index(st.session_state.default_city)
-)
+cols = st.columns(3)
+for i, city in enumerate(quick_cities):
+    if cols[i % 3].button(city, use_container_width=True):
+        st.session_state.default_city = city
+        st.session_state.auto = False
 
-if quick_city != st.session_state.default_city:
-    st.session_state.default_city = quick_city
-    st.session_state.auto = False
+# --------------------
+# Sidebar
+# --------------------
+st.sidebar.header("Settings")
+
+# Madhhab selector
+madhhab = st.sidebar.radio(
+    "Asr Madhhab",
+    ["Shafi", "Hanafi"],
+    index=0
+)
 
 # --------------------
 # Auto-detect
