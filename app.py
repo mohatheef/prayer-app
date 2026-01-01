@@ -171,8 +171,19 @@ st.markdown(
     Built by <b>Mohammed Atheef G A</b><br>
     <em>“Whoever guides someone to good will have a reward like one who did it.”</em><br>
     (Sahih Muslim)
+    <br><br>
+    💻 <b>Open Source:</b> 
+    <a href="https://github.com/mohatheef/prayer-app" target="_blank">
+    github.com/mohatheef/prayer-app
+    </a>
+    <br>
+    📩 <b>Contact:</b> 
+    <a href="mailto:atheefga18@gmail.com">
+    atheefga18@gmail.com
+    </a>
     </small>
     </center>
     """,
     unsafe_allow_html=True
 )
+
