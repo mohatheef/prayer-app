@@ -1,0 +1,38 @@
+# 🕌 Prayer Times Calculator
+
+A **pure Python + Streamlit** prayer times application based on
+**Shafi Madhhab** and **Umm al-Qura** methodology.
+
+## ✨ Features
+- Accurate prayer time computation (no external prayer libraries)
+- Shafi Asr (shadow = 1× object length)
+- Umm al-Qura Isha (90 min after Maghrib)
+- Auto-location via IP
+- Hijri date support
+- Qibla direction calculation
+- Full-year CSV export
+- Streamlit UI
+- Global-ready architecture
+
+## 📁 Project Structure
+
+prayer_app/
+├── app.py
+├── main.py
+├── core/
+│ ├── prayer_engine.py
+│ ├── astro_utils.py
+│ ├── solar_angles.py
+│ ├── cities.py
+│ ├── hijri.py
+│ ├── qibla.py
+│ ├── location.py
+│ ├── csv_generator.py
+│ └── rounding.py
+
+## ▶️ Run Locally
+```bash
+pip install streamlit requests hijri-converter
+streamlit run app.py
+👤 Author
+Mohammed Atheef G A
