@@ -11,7 +11,12 @@ def is_leap_year(year: int) -> bool:
     return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
 
 
-def generate_year_csv(city: str, year: int):
+def generate_year_csv(city: str, year: int, madhhab: str = "Shafi"):
+    """
+    Generate full-year prayer calendar CSV
+    Supports Shafi & Hanafi Asr
+    """
+
     if city not in CITIES:
         raise ValueError("City not found")
 
@@ -19,7 +24,7 @@ def generate_year_csv(city: str, year: int):
     days = 366 if is_leap_year(year) else 365
     start = date(year, 1, 1)
 
-    filename = f"{city}_{year}_Shafi_UmmAlQura.csv"
+    filename = f"{city}_{year}_{madhhab}_UmmAlQura.csv"
 
     with open(filename, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
@@ -30,6 +35,7 @@ def generate_year_csv(city: str, year: int):
             "date_gregorian",
             "date_hijri",
             "timezone",
+            "madhhab",
             "fajr",
             "sunrise",
             "dhuhr",
@@ -45,7 +51,8 @@ def generate_year_csv(city: str, year: int):
             times = get_prayer_times(
                 coords["lat"],
                 coords["lng"],
-                d
+                d,
+                madhhab=madhhab
             )
 
             writer.writerow([
@@ -53,6 +60,7 @@ def generate_year_csv(city: str, year: int):
                 d.isoformat(),
                 gregorian_to_hijri(d),
                 TZ_NAME,
+                madhhab,
                 times["fajr"],
                 times["sunrise"],
                 times["dhuhr"],
