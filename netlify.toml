@@ -1,9 +1,3 @@
 [build]
-  publish = "netlify"
-  command = "echo 'Netlify landing redirect build'"
-
-[[redirects]]
-  from = "/*"
-  to = "https://salahtime.streamlit.app"
-  status = 302
-  force = true
+  publish = "web"
+  command = "echo 'Static web build'"

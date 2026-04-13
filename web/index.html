@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Salah Time - Udupi</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="hero">
+        <h1>Salah Time</h1>
+        <p>Netlify-native prayer calendar for Udupi and Karnataka</p>
+      </header>
+
+      <section class="panel settings">
+        <div class="grid">
+          <label>
+            City
+            <select id="citySelect"></select>
+          </label>
+          <label>
+            Date
+            <input id="dateInput" type="date" />
+          </label>
+          <label>
+            Madhhab (Asr)
+            <select id="madhhabSelect">
+              <option>Shafi</option>
+              <option>Hanafi</option>
+            </select>
+          </label>
+          <label>
+            Method
+            <select id="methodSelect">
+              <option>Karnataka Coast</option>
+              <option>Umm al-Qura</option>
+            </select>
+          </label>
+          <label>
+            Manual Adjustment (min)
+            <input id="adjustInput" type="number" min="-10" max="10" value="0" />
+          </label>
+          <label>
+            Local Masjid Profile
+            <select id="masjidSelect"></select>
+          </label>
+        </div>
+        <div class="actions">
+          <button id="detectBtn">Use My Location</button>
+          <button id="downloadBtn">Download Year CSV</button>
+        </div>
+      </section>
+
+      <section class="panel meta">
+        <p id="metaLine"></p>
+        <p id="sehriLine"></p>
+      </section>
+
+      <section class="panel now">
+        <div class="stat">
+          <h3>Current</h3>
+          <p id="currentPrayer">-</p>
+        </div>
+        <div class="stat">
+          <h3>Next</h3>
+          <p id="nextPrayer">-</p>
+        </div>
+        <div class="stat">
+          <h3>Starts In</h3>
+          <p id="countdown">-</p>
+        </div>
+      </section>
+
+      <section class="panel timings">
+        <h2>Prayer Times</h2>
+        <div class="timing-grid" id="timingGrid"></div>
+      </section>
+
+      <section class="panel qibla">
+        <h2>Qibla</h2>
+        <p id="qiblaText">-</p>
+      </section>
+    </main>
+    <script src="./app.js"></script>
+  </body>
+</html>

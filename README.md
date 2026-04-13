@@ -1,6 +1,6 @@
 # Prayer App (India / Udupi Focus)
 
-A modern Streamlit prayer-times app tuned for Karnataka coastal usage.
+A Netlify-native prayer-times web app tuned for Karnataka coastal usage.
 
 ## Highlights
 
@@ -19,34 +19,19 @@ A modern Streamlit prayer-times app tuned for Karnataka coastal usage.
 ## Run locally
 
 ```bash
-pip install -r requirements.txt
-streamlit run app.py
+cd web
+python3 -m http.server 8080
 ```
 
 ## Deploy
 
-### Render (recommended)
-
-1. Push this repository to GitHub.
-2. Create a new Render web service from the repo.
-3. Render auto-detects `render.yaml`.
-4. Deploy.
-
-### Streamlit Community Cloud
-
-1. Connect GitHub repo in Streamlit Cloud.
-2. App file path: `app.py`
-3. Deploy.
-
 ### Netlify
 
-Netlify is configured as a landing/redirect site in this repo.
+This repo is now configured as a native Netlify static app.
 
-- `netlify.toml` redirects all routes to:
-  - `https://salahtime.streamlit.app`
-- `netlify/index.html` provides fallback manual click redirect.
-
-If your app URL changes, update both files with the new URL.
+- `netlify.toml` publishes the `web/` folder.
+- Prayer calculations run fully in browser JavaScript.
+- No Streamlit/Render runtime needed for Netlify hosting.
 
 ## Notes
 
