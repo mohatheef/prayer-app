@@ -1,0 +1,9 @@
+[build]
+  publish = "netlify"
+  command = "echo 'Netlify landing redirect build'"
+
+[[redirects]]
+  from = "/*"
+  to = "https://prayer-app-udupi.onrender.com"
+  status = 302
+  force = true

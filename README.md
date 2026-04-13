@@ -40,8 +40,13 @@ streamlit run app.py
 
 ### Netlify
 
-Netlify is great for static and JS/serverless apps, but this project is a Python Streamlit app.
-For full functionality, deploy on Render/Streamlit Cloud and optionally link that URL from a Netlify site.
+Netlify is configured as a landing/redirect site in this repo.
+
+- `netlify.toml` redirects all routes to:
+  - `https://prayer-app-udupi.onrender.com`
+- `netlify/index.html` provides fallback manual click redirect.
+
+If your app URL changes, update both files with the new URL.
 
 ## Notes
 
