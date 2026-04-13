@@ -43,7 +43,7 @@ streamlit run app.py
 Netlify is configured as a landing/redirect site in this repo.
 
 - `netlify.toml` redirects all routes to:
-  - `https://prayer-app-udupi.onrender.com`
+  - `https://salahtime.streamlit.app`
 - `netlify/index.html` provides fallback manual click redirect.
 
 If your app URL changes, update both files with the new URL.

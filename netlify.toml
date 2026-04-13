@@ -4,6 +4,6 @@
 
 [[redirects]]
   from = "/*"
-  to = "https://prayer-app-udupi.onrender.com"
+  to = "https://salahtime.streamlit.app"
   status = 302
   force = true
