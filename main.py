@@ -8,7 +8,10 @@ coords = CITIES[city]
 times = get_prayer_times(
     coords["lat"],
     coords["lng"],
-    date.today()
+    date.today(),
+    madhhab="Shafi",
+    timezone_name="Asia/Kolkata",
+    method="Karnataka Coast",
 )
 
 print(f"\n🕌 Prayer Times – {city}\n")
